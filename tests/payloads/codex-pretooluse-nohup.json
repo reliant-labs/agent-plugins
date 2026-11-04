@@ -1,0 +1,14 @@
+{
+  "session_id": "019a0000-0000-7000-8000-000000000000",
+  "transcript_path": null,
+  "cwd": "__CWD__",
+  "hook_event_name": "PreToolUse",
+  "model": "gpt-5.5-codex",
+  "permission_mode": "default",
+  "turn_id": "019a0000-0000-7000-8000-000000000001",
+  "tool_name": "Bash",
+  "tool_use_id": "call_abc123",
+  "tool_input": {
+    "command": "nohup npm run dev > dev.log 2>&1 &"
+  }
+}

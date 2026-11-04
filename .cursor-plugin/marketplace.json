@@ -1,0 +1,16 @@
+{
+  "name": "reliant-labs",
+  "owner": {
+    "name": "Reliant Labs"
+  },
+  "metadata": {
+    "description": "Free plugins from Reliant Labs for running coding agents in parallel."
+  },
+  "plugins": [
+    {
+      "name": "parallel-agents-safety",
+      "source": "plugins/parallel-agents-safety",
+      "description": "Stop one agent from breaking the others: no pkill/killall, no nohup or stray &, no destructive git outside a worktree."
+    }
+  ]
+}

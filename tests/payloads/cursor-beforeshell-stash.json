@@ -1,0 +1,15 @@
+{
+  "conversation_id": "c-1",
+  "generation_id": "g-1",
+  "model": "claude-opus-4-7",
+  "hook_event_name": "beforeShellExecution",
+  "cursor_version": "1.7.2",
+  "workspace_roots": [
+    "__CWD__"
+  ],
+  "user_email": null,
+  "transcript_path": null,
+  "command": "git stash",
+  "cwd": "__CWD__",
+  "sandbox": false
+}

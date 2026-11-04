@@ -1,0 +1,16 @@
+{
+  "session_id": "abc123",
+  "prompt_id": "550e8400-e29b-41d4-a716-446655440000",
+  "transcript_path": "/home/user/.claude/projects/x/transcript.jsonl",
+  "cwd": "__CWD__",
+  "permission_mode": "default",
+  "hook_event_name": "PreToolUse",
+  "tool_name": "Bash",
+  "tool_use_id": "toolu_01ABC123",
+  "tool_input": {
+    "command": "git fetch origin && git reset --hard origin/main",
+    "description": "Sync with main",
+    "timeout": 120000,
+    "run_in_background": false
+  }
+}

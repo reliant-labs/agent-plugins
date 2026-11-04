@@ -1,0 +1,18 @@
+{
+  "description": "parallel-agents-safety: refuse pkill, nohup/&, and destructive git outside a worktree.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$PLUGIN_ROOT/scripts/guard.py\" codex",
+            "statusMessage": "Checking shell command for parallel-agent safety",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "parallel-agents-safety",
+  "version": "0.1.0",
+  "description": "Hooks that stop one coding agent from breaking the others on a shared machine: no pkill/killall, no nohup or stray &, no destructive git outside a worktree.",
+  "author": {
+    "name": "Reliant Labs"
+  },
+  "homepage": "https://github.com/reliant-labs/agent-plugins",
+  "repository": "https://github.com/reliant-labs/agent-plugins",
+  "license": "MIT",
+  "keywords": ["hooks", "safety", "parallel-agents", "git-worktree"],
+  "skills": "./skills/",
+  "hooks": "./hooks/cursor-hooks.json"
+}
