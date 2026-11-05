@@ -192,6 +192,13 @@ The skill ships with a Cursor rule that points the agent at it. There are no
 hooks, no MCP server and no scripts: the agent runs the `forge` CLI (or
 `npx -y @reliantlabs/forge`) itself.
 
+The deploy uploads the project's build (and, for a backend, its image) to
+Reliant hosting: its control plane (`admin.reliantapi.com`) and its image
+registry. It also creates a temporary
+anonymous account there, holding no name or email, only hashes of a device
+id and a network. Unclaimed deploys are deleted 7 days after their 72 hours
+end.
+
 ### Install
 
 **Claude Code**
