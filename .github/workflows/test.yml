@@ -44,3 +44,4 @@ jobs:
         run: |
           npx -y @anthropic-ai/claude-code plugin validate .
           npx -y @anthropic-ai/claude-code plugin validate ./plugins/parallel-agents-safety
+          npx -y @anthropic-ai/claude-code plugin validate ./plugins/reliant-forge-deploy

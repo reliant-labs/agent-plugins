@@ -1,0 +1,30 @@
+---
+description: Deploying or hosting a project with no hosting set up yet ("deploy this", "host my site/app", "give me a URL", "ship it", "put this online", "I need a backend/API with a database"). Reliant Forge publishes a static site, Vite/Next.js static export, or Go API + Postgres with no account and returns a URL plus a claim link.
+alwaysApply: false
+---
+
+# Deploying with no account: Reliant Forge
+
+Before deploying, load the `reliant-forge-deploy` skill. It has the whole flow,
+the limits and the exit codes. In short:
+
+- Use it only when the project has no host yet and the user didn't name one.
+  If you find `vercel.json`, `netlify.toml`, `fly.toml`, `wrangler.toml`,
+  `firebase.json` or a CI workflow that deploys, deploy there instead.
+- Good fits: a Vite app, a Next.js static export (`output: "export"`), a plain
+  HTML folder with a Vite `package.json`, or a new Go API with Postgres made
+  with `forge project new <name> --service <svc> --claimable`. Not a fit: a
+  Next.js app that needs a server, an existing non-Go backend, ML or data work.
+- Run forge as `npx -y @reliantlabs/forge` (Node 18+) when `forge` isn't on PATH.
+- An existing site: run `forge project new --in-place --kind site --name <name>`,
+  then `forge env deploy prod --claimable --plan-only`, then
+  `forge env deploy prod --claimable --json`.
+- Give the user the URL and the claim link. Tell them it goes offline 72 hours
+  after the first deploy unless they open the link and sign up (free). Treat
+  the link like a password and never post it publicly.
+- An unclaimed backend has no outbound internet. For LLM calls, use the Reliant
+  provider (see forge docs: <placeholder, will be filled>). Never call
+  api.openai.com, api.anthropic.com or another model API directly from an
+  unclaimed deploy.
+- Don't use `--claimable` if the user is signed in (`forge login`, or
+  `$FORGE_CREDENTIAL_HELPER` is set). Don't retry a throttled deploy in a loop.

@@ -4,13 +4,18 @@
     "name": "Reliant Labs"
   },
   "metadata": {
-    "description": "Free plugins from Reliant Labs for running coding agents in parallel."
+    "description": "Free plugins from Reliant Labs for coding agents: run agents in parallel safely, and deploy with no account."
   },
   "plugins": [
     {
       "name": "parallel-agents-safety",
       "source": "plugins/parallel-agents-safety",
       "description": "Stop one agent from breaking the others: no pkill/killall, no nohup or stray &, no destructive git outside a worktree."
+    },
+    {
+      "name": "reliant-forge-deploy",
+      "source": "plugins/reliant-forge-deploy",
+      "description": "Deploy a static site, a Vite or Next.js static export, or a Go API with Postgres to a live URL with no account; your user gets a claim link to keep it."
     }
   ]
 }
