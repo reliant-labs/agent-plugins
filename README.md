@@ -1,7 +1,11 @@
 # agent-plugins
 
-Free plugins for Claude Code, Codex and Cursor from Reliant Labs. The first
-one is **parallel-agents-safety**.
+Free plugins for Claude Code, Codex and Cursor from Reliant Labs:
+
+- **parallel-agents-safety**: hooks that stop one agent from breaking the
+  others on a shared machine.
+- **reliant-forge-deploy**: a skill that puts a site or a Go + Postgres API
+  online with no account, and hands your user a link to keep it.
 
 ## parallel-agents-safety
 
@@ -155,6 +159,81 @@ blocked or asked about, run against a real main checkout and linked worktrees,
 plus tests that feed the script recorded hook payloads for Claude Code, Codex
 and Cursor. CI runs them on Linux and macOS and validates the Claude Code
 manifests.
+
+## reliant-forge-deploy
+
+Ask your agent to "deploy this", "give me a URL" or "put this online" in a
+project with no hosting yet. The agent uses
+[Reliant Forge](https://github.com/reliant-labs/forge) to publish it with no
+account, token or card, and gives you two links: the live site, and a claim
+link. Open the claim link within 72 hours and sign up (free) to keep the
+deploy. If nobody claims it, it goes offline after 72 hours and is deleted
+7 days after that.
+
+What it deploys with no account:
+
+- a Vite app, a Next.js static export, or a plain HTML folder (the agent adds
+  a Vite `package.json`);
+- a new Go API with one managed Postgres database, scaffolded by forge, with
+  an optional static site beside it.
+
+What it doesn't do:
+
+- It doesn't move a project that already deploys somewhere (Vercel, Netlify,
+  Fly, Cloudflare, your CI), or override a host you named.
+- It doesn't deploy Next.js apps that need a server, existing non-Go backends,
+  or ML and data work.
+- An unclaimed backend has **no outbound internet**: payments, webhooks and
+  direct model API calls fail until you claim it.
+- One hosted static site per org stays free after you claim it (each env's
+  site counts; 1 GiB storage cap). A backend needs paid app hosting to keep
+  running: see [pricing](https://reliantlabs.io/pricing).
+
+The skill ships with a Cursor rule that points the agent at it. There are no
+hooks, no MCP server and no scripts: the agent runs the `forge` CLI (or
+`npx -y @reliantlabs/forge`) itself.
+
+The deploy uploads the project's build (and, for a backend, its image) to
+Reliant hosting: its control plane (`admin.reliantapi.com`) and its image
+registry. It also creates a temporary
+anonymous account there, holding no name or email, only hashes of a device
+id and a network. Unclaimed deploys are deleted 7 days after their 72 hours
+end.
+
+### Install
+
+**Claude Code**
+
+```
+/plugin marketplace add reliant-labs/agent-plugins
+/plugin install reliant-forge-deploy@reliant-labs
+```
+
+**Codex**
+
+```
+codex plugin marketplace add reliant-labs/agent-plugins
+codex plugin add reliant-forge-deploy@reliant-labs
+```
+
+**Cursor**
+
+```
+git clone https://github.com/reliant-labs/agent-plugins
+mkdir -p ~/.cursor/plugins/local
+cp -R agent-plugins/plugins/reliant-forge-deploy ~/.cursor/plugins/local/
+```
+
+Then run **Developer: Reload Window**.
+
+**Any other agent**: copy
+`plugins/reliant-forge-deploy/skills/reliant-forge-deploy/SKILL.md` into the
+agent's skills directory, or paste it into `AGENTS.md`.
+
+`evals/reliant-forge-deploy/prompts.json` lists the prompts that should
+trigger the skill and the ones that shouldn't (see `evals/README.md`).
+`tests/test_reliant_forge_deploy.py` checks that the manifests agree, that the
+skill's frontmatter is valid, and that the evals match the skill.
 
 ## License
 

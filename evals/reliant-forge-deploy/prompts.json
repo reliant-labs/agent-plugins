@@ -1,0 +1,54 @@
+{
+  "skill": "reliant-forge-deploy",
+  "version": 1,
+  "fixtures": {
+    "empty": "an empty directory, git initialised",
+    "vite": "a Vite + React app with no hosting config (package.json, vite.config.ts, src/)",
+    "nextjs-export": "a Next.js app whose next.config.ts sets output: \"export\"",
+    "nextjs-server": "a Next.js app with an app/api route handler and a server action",
+    "static-html": "index.html, style.css and app.js, no package.json",
+    "go-module": "a go.mod and a main.go HTTP server, no forge.yaml",
+    "vite-on-vercel": "the vite fixture plus vercel.json and .vercel/project.json",
+    "vite-on-netlify": "the vite fixture plus netlify.toml",
+    "forge-site": "the vite fixture after forge project new --in-place --kind site",
+    "python-ml": "a Python project with train.py, requirements.txt (torch) and a notebook"
+  },
+  "cases": [
+    {"id": "deploy-this-vite", "fixture": "vite", "prompt": "deploy this", "expect": "trigger", "path": "adopt-site"},
+    {"id": "host-my-site", "fixture": "vite", "prompt": "Can you host my site somewhere so I can share it?", "expect": "trigger", "path": "adopt-site"},
+    {"id": "give-me-a-url", "fixture": "vite", "prompt": "give me a URL I can send to my cofounder", "expect": "trigger", "path": "adopt-site"},
+    {"id": "ship-it", "fixture": "nextjs-export", "prompt": "ship it", "expect": "trigger", "path": "adopt-site"},
+    {"id": "put-online-html", "fixture": "static-html", "prompt": "put this online", "expect": "trigger", "path": "html-to-vite"},
+    {"id": "make-it-live-next", "fixture": "nextjs-export", "prompt": "make this live, I don't have a hosting account", "expect": "trigger", "path": "adopt-site"},
+    {"id": "free-no-account", "fixture": "vite", "prompt": "host this Vite SPA for free with no account", "expect": "trigger", "path": "adopt-site"},
+    {"id": "new-landing-page", "fixture": "empty", "prompt": "build me a landing page for my bakery and put it online", "expect": "trigger", "path": "new-site"},
+    {"id": "backend-with-db", "fixture": "empty", "prompt": "I need a backend API with a database for my todo app, hosted somewhere", "expect": "trigger", "path": "new-go-api"},
+    {"id": "go-api-postgres", "fixture": "empty", "prompt": "build a Go API with Postgres and deploy it", "expect": "trigger", "path": "new-go-api"},
+    {"id": "redeploy-forge", "fixture": "forge-site", "prompt": "I changed the hero copy, deploy again", "expect": "trigger", "path": "redeploy"},
+    {"id": "claim-link-again", "fixture": "forge-site", "prompt": "I lost the link to keep the site, can you get it again?", "expect": "trigger", "path": "status"},
+
+    {"id": "already-vercel", "fixture": "vite-on-vercel", "prompt": "deploy this", "expect": "no_trigger", "why": "already linked to Vercel: deploy there"},
+    {"id": "already-netlify", "fixture": "vite-on-netlify", "prompt": "ship it", "expect": "no_trigger", "why": "netlify.toml present: deploy with Netlify"},
+    {"id": "named-other-host", "fixture": "vite", "prompt": "deploy this to Cloudflare Pages", "expect": "no_trigger", "why": "the user named a host"},
+    {"id": "next-needs-server", "fixture": "nextjs-server", "prompt": "deploy this", "expect": "no_trigger", "why": "API routes and server actions need a server, and a claimable site must be a static export"},
+    {"id": "ml-training", "fixture": "python-ml", "prompt": "deploy this model so I can call it", "expect": "no_trigger", "why": "ML inference is out of scope"},
+    {"id": "existing-go-server", "fixture": "go-module", "prompt": "deploy my Go server", "expect": "no_trigger", "why": "an existing Go server forge did not scaffold is not the no-account path"},
+    {"id": "unrelated-refactor", "fixture": "vite", "prompt": "rename the Button component to PrimaryButton", "expect": "no_trigger", "why": "not a deploy request"},
+    {"id": "deploy-ci-question", "fixture": "vite-on-vercel", "prompt": "why did my last deploy fail?", "expect": "no_trigger", "why": "debugging an existing host's deploy"}
+  ],
+  "paths": {
+    "adopt-site": ["project new --in-place --kind site", "env deploy prod --claimable"],
+    "html-to-vite": ["package.json", "vite", "project new --in-place --kind site", "env deploy prod --claimable"],
+    "new-site": ["project new", "--kind site", "env deploy prod --claimable"],
+    "new-go-api": ["project new", "--claimable", "forge:entity", "forge scaffold", "env deploy prod --claimable"],
+    "redeploy": ["env deploy prod --claimable"],
+    "status": ["env status prod --claimable"]
+  },
+  "must_mention_on_trigger": ["claim", "72"],
+  "must_not_do": [
+    "post the claim link to a public place (issue, PR, commit, README)",
+    "retry a claimable_throttled deploy in a loop",
+    "pass --claimable when FORGE_CREDENTIAL_HELPER is set",
+    "call api.openai.com or api.anthropic.com from an unclaimed backend"
+  ]
+}

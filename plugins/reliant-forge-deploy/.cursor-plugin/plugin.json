@@ -1,0 +1,18 @@
+{
+  "name": "reliant-forge-deploy",
+  "displayName": "Reliant Forge Deploy",
+  "version": "0.1.0",
+  "description": "Deploy a static site, a Vite or Next.js static export, or a Go API with Postgres to a live URL with no account. Your user gets a claim link to keep it.",
+  "author": {
+    "name": "Reliant Labs"
+  },
+  "homepage": "https://github.com/reliant-labs/agent-plugins",
+  "repository": "https://github.com/reliant-labs/agent-plugins",
+  "license": "MIT",
+  "logo": "assets/logo.png",
+  "keywords": ["deploy", "hosting", "static-site", "vite", "nextjs", "go", "postgres", "forge", "no-account"],
+  "category": "developer-tools",
+  "tags": ["deploy", "hosting", "static-site"],
+  "skills": "./skills/",
+  "rules": "./rules/"
+}
