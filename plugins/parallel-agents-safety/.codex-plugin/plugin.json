@@ -14,9 +14,9 @@
   "hooks": "./hooks/codex-hooks.json",
   "interface": {
     "displayName": "Parallel Agents Safety",
-    "shortDescription": "Stop agents from killing, detaching, or resetting each other's work",
+    "shortDescription": "Protect parallel agents' work",
     "developerName": "Reliant Labs",
-    "category": "Coding",
+    "category": "Developer Tools",
     "websiteURL": "https://github.com/reliant-labs/agent-plugins"
   }
 }

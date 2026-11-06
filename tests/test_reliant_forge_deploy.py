@@ -26,6 +26,12 @@ MARKETPLACES = {
     "codex": ROOT / ".agents" / "plugins" / "marketplace.json",
     "cursor": ROOT / ".cursor-plugin" / "marketplace.json",
 }
+# interface.category values OpenAI's plugin directory accepts.
+OPENAI_CATEGORIES = {
+    "Productivity", "Creativity", "Developer Tools", "Business & Operations",
+    "Data & Analytics", "Communication", "Education & Research", "Security",
+    "Finance", "Healthcare", "Travel", "Entertainment", "Other",
+}
 
 
 def frontmatter(path):
@@ -61,6 +67,21 @@ class Manifests(unittest.TestCase):
         iface = codex["interface"]
         for key in ("logo", "composerIcon"):
             self.assertTrue((PLUGIN / iface[key]).exists(), f"codex {key}: {iface[key]}")
+
+    def test_openai_directory_listing(self):
+        # OpenAI's plugin directory caps interface.shortDescription at 30
+        # characters for public submission (an upload accepts longer text, so
+        # nothing else catches it), and rejects any category outside its list
+        # with plugin_category_unknown. Checked for every plugin, not only this
+        # one. https://developers.openai.com/plugins/deploy/submission-errors
+        manifests = sorted(ROOT.glob("plugins/*/.codex-plugin/plugin.json"))
+        self.assertTrue(manifests)
+        for path in manifests:
+            iface = json.loads(path.read_text())["interface"]
+            where = path.relative_to(ROOT)
+            short = iface["shortDescription"]
+            self.assertLessEqual(len(short), 30, f"{where}: {short!r}")
+            self.assertIn(iface.get("category", "Other"), OPENAI_CATEGORIES, where)
 
     def test_listed_in_every_marketplace(self):
         for host, path in MARKETPLACES.items():

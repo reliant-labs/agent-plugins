@@ -13,10 +13,10 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Reliant Forge Deploy",
-    "shortDescription": "Put a site or a Go + Postgres API online with no account",
+    "shortDescription": "Deploy apps with no account",
     "longDescription": "Deploys a static site, a Vite app, a Next.js static export, or a new Go API with Postgres to Reliant hosting with forge env deploy prod --claimable. No account, token or card: it prints a live URL and a claim link the user opens within 72 hours to keep the deploy. Unclaimed backends have no outbound internet until claimed.",
     "developerName": "Reliant Labs",
-    "category": "Coding",
+    "category": "Developer Tools",
     "capabilities": ["Read", "Write"],
     "websiteURL": "https://reliantlabs.io/products/forge/agents",
     "privacyPolicyURL": "https://reliantlabs.io/privacy",
