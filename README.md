@@ -185,8 +185,9 @@ What it doesn't do:
   or ML and data work.
 - An unclaimed backend has **no outbound internet**: payments, webhooks and
   direct model API calls fail until you claim it.
-- One hosted static site per account stays free after you claim it. A backend
-  needs paid app hosting to keep running.
+- One hosted static site per org stays free after you claim it (each env's
+  site counts; 1 GiB storage cap). A backend needs paid app hosting to keep
+  running: see [pricing](https://reliantlabs.io/pricing).
 
 The skill ships with a Cursor rule that points the agent at it. There are no
 hooks, no MCP server and no scripts: the agent runs the `forge` CLI (or

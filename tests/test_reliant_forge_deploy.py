@@ -18,7 +18,7 @@ EVALS = ROOT / "evals" / "reliant-forge-deploy" / "prompts.json"
 
 MANIFESTS = {
     "claude": PLUGIN / ".claude-plugin" / "plugin.json",
-    "portable": PLUGIN / "plugin.json",
+    "codex": PLUGIN / ".codex-plugin" / "plugin.json",
     "cursor": PLUGIN / ".cursor-plugin" / "plugin.json",
 }
 MARKETPLACES = {
@@ -56,7 +56,9 @@ class Manifests(unittest.TestCase):
         cursor = json.loads(MANIFESTS["cursor"].read_text())
         for key in ("skills", "rules", "logo"):
             self.assertTrue((PLUGIN / cursor[key]).exists(), f"cursor {key}: {cursor[key]}")
-        iface = json.loads(MANIFESTS["portable"].read_text())["extensions"]["com.openai"]["interface"]
+        codex = json.loads(MANIFESTS["codex"].read_text())
+        self.assertTrue((PLUGIN / codex["skills"]).exists(), f"codex skills: {codex['skills']}")
+        iface = codex["interface"]
         for key in ("logo", "composerIcon"):
             self.assertTrue((PLUGIN / iface[key]).exists(), f"codex {key}: {iface[key]}")
 

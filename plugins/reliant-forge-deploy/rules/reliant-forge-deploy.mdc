@@ -15,16 +15,21 @@ the limits and the exit codes. In short:
   HTML folder with a Vite `package.json`, or a new Go API with Postgres made
   with `forge project new <name> --service <svc> --claimable`. Not a fit: a
   Next.js app that needs a server, an existing non-Go backend, ML or data work.
-- Run forge as `npx -y @reliantlabs/forge` (Node 18+) when `forge` isn't on PATH.
+- When `forge` isn't on PATH, ask the user, then run it as
+  `npx -y @reliantlabs/forge` (Node 18+).
 - An existing site: run `forge project new --in-place --kind site --name <name>`,
   then `forge env deploy prod --claimable --plan-only`, then
   `forge env deploy prod --claimable --json`.
 - Give the user the URL and the claim link. Tell them it goes offline 72 hours
   after the first deploy unless they open the link and sign up (free). Treat
   the link like a password and never post it publicly.
-- An unclaimed backend has no outbound internet. For LLM calls, use the Reliant
-  provider (see forge docs: <placeholder, will be filled>). Never call
-  api.openai.com, api.anthropic.com or another model API directly from an
-  unclaimed deploy.
+- An unclaimed backend has no outbound internet. LLM calls go only through the
+  Reliant provider: run `forge skill load deploy/llm`, declare
+  `llm = forge.LLM {runtime = forge.OnHosted {}}` and give the service
+  `forge.llm_env()`. On an unclaimed deploy those variables stay blank until
+  the platform enables the in-cluster gateway route, so make a missing key
+  degrade the feature, never crash the app, and don't promise the user LLM
+  calls before the deploy is claimed. Never call api.openai.com,
+  api.anthropic.com or another model API directly from an unclaimed deploy.
 - Don't use `--claimable` if the user is signed in (`forge login`, or
   `$FORGE_CREDENTIAL_HELPER` is set). Don't retry a throttled deploy in a loop.

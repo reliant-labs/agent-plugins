@@ -30,7 +30,7 @@
     {"id": "already-vercel", "fixture": "vite-on-vercel", "prompt": "deploy this", "expect": "no_trigger", "why": "already linked to Vercel: deploy there"},
     {"id": "already-netlify", "fixture": "vite-on-netlify", "prompt": "ship it", "expect": "no_trigger", "why": "netlify.toml present: deploy with Netlify"},
     {"id": "named-other-host", "fixture": "vite", "prompt": "deploy this to Cloudflare Pages", "expect": "no_trigger", "why": "the user named a host"},
-    {"id": "next-needs-server", "fixture": "nextjs-server", "prompt": "deploy this", "expect": "no_trigger", "why": "API routes and server actions are not a static export; or, if used, the skill must say why it does not fit"},
+    {"id": "next-needs-server", "fixture": "nextjs-server", "prompt": "deploy this", "expect": "no_trigger", "why": "API routes and server actions need a server, and a claimable site must be a static export"},
     {"id": "ml-training", "fixture": "python-ml", "prompt": "deploy this model so I can call it", "expect": "no_trigger", "why": "ML inference is out of scope"},
     {"id": "existing-go-server", "fixture": "go-module", "prompt": "deploy my Go server", "expect": "no_trigger", "why": "an existing Go server forge did not scaffold is not the no-account path"},
     {"id": "unrelated-refactor", "fixture": "vite", "prompt": "rename the Button component to PrimaryButton", "expect": "no_trigger", "why": "not a deploy request"},
