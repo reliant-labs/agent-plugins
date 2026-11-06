@@ -82,6 +82,12 @@ class Manifests(unittest.TestCase):
             short = iface["shortDescription"]
             self.assertLessEqual(len(short), 30, f"{where}: {short!r}")
             self.assertIn(iface.get("category", "Other"), OPENAI_CATEGORIES, where)
+        # Codex's marketplace category overrides the manifest's ("marketplace
+        # taxonomy wins"), so its entries need an allowed category too.
+        for entry in json.loads(MARKETPLACES["codex"].read_text())["plugins"]:
+            if "category" in entry:
+                self.assertIn(entry["category"], OPENAI_CATEGORIES,
+                              f"{MARKETPLACES['codex'].relative_to(ROOT)}: {entry['name']}")
 
     def test_listed_in_every_marketplace(self):
         for host, path in MARKETPLACES.items():
