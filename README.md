@@ -190,8 +190,10 @@ What it doesn't do:
   running: see [pricing](https://reliantlabs.io/pricing).
 
 The skill ships with a Cursor rule that points the agent at it. There are no
-hooks, no MCP server and no scripts: the agent runs the `forge` CLI (or
-`npx -y @reliantlabs/forge`) itself.
+hooks and no scripts. On Claude Code the plugin also registers the forge MCP
+server (`.mcp.json`, `npx -y @reliantlabs/forge@<version> mcp`, a local stdio
+process with no account or key), so the agent can call forge's tools; the
+skill itself drives the `forge` CLI (or `npx -y @reliantlabs/forge`).
 
 The deploy uploads the project's build (and, for a backend, its image) to
 Reliant hosting: its control plane (`admin.reliantapi.com`) and its image

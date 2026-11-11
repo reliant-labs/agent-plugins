@@ -1,6 +1,6 @@
 {
   "name": "reliant-forge-deploy",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Deploy a static site, a Vite or Next.js static export, or a Go API with Postgres to a live URL with no account. Your user gets a claim link to keep it.",
   "author": {
     "name": "Reliant Labs",
