@@ -228,6 +228,16 @@ cp -R agent-plugins/plugins/reliant-forge-deploy ~/.cursor/plugins/local/
 
 Then run **Developer: Reload Window**.
 
+**Install with skills.sh (any agent)**
+
+```
+npx skills add reliant-labs/agent-plugins --skill reliant-forge-deploy
+```
+
+This installs only the skill, into `.agents/skills/reliant-forge-deploy` in the
+current project (linked into Claude Code's skills directory). It doesn't add the
+forge MCP server or the Cursor rule.
+
 **Any other agent**: copy
 `plugins/reliant-forge-deploy/skills/reliant-forge-deploy/SKILL.md` into the
 agent's skills directory, or paste it into `AGENTS.md`.

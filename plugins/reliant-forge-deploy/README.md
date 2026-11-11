@@ -36,4 +36,14 @@ same forge commands the CLI does. Installation and what it doesn't do are in the
 /plugin install reliant-forge-deploy@reliant-labs
 ```
 
+Install with skills.sh (any agent):
+
+```
+npx skills add reliant-labs/agent-plugins --skill reliant-forge-deploy
+```
+
+This installs only the skill, into `.agents/skills/reliant-forge-deploy` in the
+current project (linked into Claude Code's skills directory). It doesn't add the
+forge MCP server or the Cursor rule.
+
 MIT licensed.
