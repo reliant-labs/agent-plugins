@@ -58,6 +58,15 @@ class Manifests(unittest.TestCase):
             self.assertEqual(len(set(values.values())), 1, f"{key} differs: {values}")
         self.assertEqual(loaded["claude"]["name"], "reliant-forge-deploy")
 
+    def test_mcp_server_is_pinned(self):
+        # Claude's plugin directory blocks an npx launcher that is not pinned
+        # to an exact version.
+        servers = json.loads((PLUGIN / ".mcp.json").read_text())["mcpServers"]
+        args = servers["forge"]["args"]
+        self.assertEqual(servers["forge"]["command"], "npx")
+        self.assertRegex(args[1], r"^@reliantlabs/forge@\d+\.\d+\.\d+$")
+        self.assertEqual(args[2:], ["mcp"])
+
     def test_paths_resolve(self):
         cursor = json.loads(MANIFESTS["cursor"].read_text())
         for key in ("skills", "rules", "logo"):
