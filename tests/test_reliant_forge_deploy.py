@@ -67,6 +67,12 @@ class Manifests(unittest.TestCase):
         self.assertRegex(args[1], r"^@reliantlabs/forge@\d+\.\d+\.\d+$")
         self.assertEqual(args[2:], ["mcp"])
 
+    def test_readmes_match_mcp_pin(self):
+        server = json.loads((PLUGIN / ".mcp.json").read_text())["mcpServers"]["forge"]
+        command = " ".join([server["command"], *server["args"]])
+        for path in (ROOT / "README.md", PLUGIN / "README.md"):
+            self.assertIn(f"`{command}`", path.read_text(), str(path))
+
     def test_paths_resolve(self):
         cursor = json.loads(MANIFESTS["cursor"].read_text())
         for key in ("skills", "rules", "logo"):
