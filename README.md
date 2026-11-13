@@ -191,7 +191,7 @@ What it doesn't do:
 
 The skill ships with a Cursor rule that points the agent at it. There are no
 hooks and no scripts. On Claude Code the plugin also registers the forge MCP
-server (`.mcp.json`, `npx -y @reliantlabs/forge@<version> mcp`, a local stdio
+server (`.mcp.json`, `npx -y @reliantlabs/forge@1.5.0 mcp`, a local stdio
 process with no account or key), so the agent can call forge's tools; the
 skill itself drives the `forge` CLI (or `npx -y @reliantlabs/forge`).
 

@@ -24,7 +24,7 @@ deploy and its data are deleted 7 days after its 72 hours end.
 anonymous deploys are open.
 
 It has no hooks and no scripts. On Claude Code it registers one MCP server,
-`forge`, through `.mcp.json`: it runs `npx -y @reliantlabs/forge@1.3.0 mcp`
+`forge`, through `.mcp.json`: it runs `npx -y @reliantlabs/forge@1.5.0 mcp`
 as a local process on your machine, needs no account or key, and exposes the
 same forge commands the CLI does. Installation and what it doesn't do are in the
 [repository README](https://github.com/reliant-labs/agent-plugins#reliant-forge-deploy).
