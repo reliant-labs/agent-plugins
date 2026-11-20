@@ -65,7 +65,7 @@ class Manifests(unittest.TestCase):
         args = servers["forge"]["args"]
         self.assertEqual(servers["forge"]["command"], "npx")
         self.assertRegex(args[1], r"^@reliantlabs/forge@\d+\.\d+\.\d+$")
-        self.assertEqual(args[2:], ["mcp"])
+        self.assertEqual(args[2:], ["agent", "mcp"])
 
     def test_readmes_match_mcp_pin(self):
         server = json.loads((PLUGIN / ".mcp.json").read_text())["mcpServers"]["forge"]
