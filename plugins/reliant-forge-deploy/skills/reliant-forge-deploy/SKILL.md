@@ -63,7 +63,7 @@ Every command below is written as `forge ...`. With npx, write
 `npx -y @reliantlabs/forge ...` instead.
 
 **Already signed in?** If `$FORGE_CREDENTIAL_HELPER` is set (inside Reliant,
-where you run `reliant forge ...`) or the user has run `forge login`, deploy to
+where you run `reliant forge ...`) or the user has run `forge cloud login`, deploy to
 their account with plain `forge env deploy prod`, without `--claimable`.
 forge refuses `--claimable` for a signed-in user (exit 1).
 
@@ -121,7 +121,7 @@ forge scaffold                          # migrations, CRUD RPCs, handlers, ORM, 
 forge lint --quiet && go build ./...    # must pass
 ```
 
-Before you write the API, run `forge skill load forge`. It covers the project
+Before you write the API, run `forge agent skill load forge`. It covers the project
 layout and the rules forge's linters enforce.
 
 Commit what forge wrote so the release records a commit. If the user manages
@@ -173,7 +173,7 @@ it. For example:
 Explain what claiming gets them:
 
 - The deploy moves into their own free Reliant account, so it stops expiring.
-  They can then deploy updates as themselves (`forge login`, then
+  They can then deploy updates as themselves (`forge cloud login`, then
   `forge env deploy prod` without `--claimable`).
 - A static site can stay free: one hosted static site per org is free (each
   env's site counts), with a 1 GiB storage cap.
@@ -199,7 +199,7 @@ a README.
 An app that needs an outside API to start won't come up unclaimed. Make that
 call lazy or optional, or ask the user to claim first.
 
-**LLM calls.** Run `forge skill load deploy/llm` before you write one. The app
+**LLM calls.** Run `forge agent skill load deploy/llm` before you write one. The app
 calls Reliant's LLM gateway (the Reliant provider), which speaks the OpenAI and
 Anthropic APIs, so the stock SDKs work with no configuration in code:
 
@@ -220,7 +220,7 @@ A refusal also has `error_reason`, the stable field to branch on. The deploy
 document, the `--plan-only` document and forge's error envelope all use that
 name. A refusal also has `next_actions`: the exact commands that get past it,
 best first. Use them rather than parsing `error`, within these rules: a
-`forge login` is the user's to run, not yours; never sign the user
+`forge cloud login` is the user's to run, not yours; never sign the user
 out to deploy anonymously, and never rerun a throttled deploy before
 `retry_at`.
 
@@ -231,11 +231,11 @@ out to deploy anonymously, and never rerun a throttled deploy before
 | 4, `claimable_ineligible` | The env doesn't fit the plan (step 6) | Apply the fix each line names, then run `--plan-only` again |
 | 4, `claimable_unavailable` | The platform isn't taking anonymous deploys right now (`unavailable_cause`) | Not the project's fault. Tell the user. Retry later, or they can sign in |
 | 4, `claimable_throttled` | A rate limit (`throttle_scope`: network, device or platform) | Wait until `retry_at`. **Don't retry in a loop**, and tell the user when it can run |
-| 4, `claimable_claimed` | The user already claimed it | `forge login`, then `forge env deploy prod` without `--claimable` |
+| 4, `claimable_claimed` | The user already claimed it | `forge cloud login`, then `forge env deploy prod` without `--claimable` |
 | any other non-zero | A build, lint or config error in the project | Read the message. forge prints the file, the rule and the fix. Fix it and deploy again |
 
 If forge itself misbehaves (a crash, or an error that contradicts these docs),
-`forge report-bug` files a report with the Reliant team. It sends nothing
+`forge agent report-bug` files a report with the Reliant team. It sends nothing
 unless you run it, and `--dry-run` prints the exact payload first. Tell the
 user what happened. (The deploy and `--plan-only` talk to Reliant's control
 plane too: see step 4.)
@@ -254,6 +254,6 @@ plane too: see step 4.)
 - Don't run an installer without asking the user. Don't stage with
   `git add -A`, and never commit a `.env` file.
 
-More: `forge skill load deploy/static-site` (sites),
-`forge skill load deploy/hosting` (the "No account" section), and
+More: `forge agent skill load deploy/static-site` (sites),
+`forge agent skill load deploy/hosting` (the "No account" section), and
 https://docs.reliantlabs.io/forge/deploy-without-an-account.
